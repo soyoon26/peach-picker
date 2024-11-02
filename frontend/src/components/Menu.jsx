@@ -27,7 +27,7 @@ const Menu = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full min-w-[1300px]">
       <div className="flex justify-between h-16 p-2 bg-white sm:flex">
         <div className="flex items-center ml-5">
           <Link href="/">
@@ -72,7 +72,7 @@ const Menu = () => {
         </div>
       </div>
       <div>
-        <div className="flex flex-col items-center">
+        {/* <div className="flex flex-col items-center">
           <Image
             className="sm:hidden"
             src={peach_logo}
@@ -80,8 +80,8 @@ const Menu = () => {
             height={280}
             alt="피치피커 로고"
           />
-        </div>
-        <div className="fixed bottom-0 flex items-center justify-around w-full p-4 bg-white border-t-2 border-gray-500 sm:hidden">
+        </div> */}
+        {/* <div className="fixed bottom-0 flex items-center justify-around w-full p-4 bg-white border-t-2 border-gray-500 sm:hidden">
           <Link href="/">
             <Image
               className="flex"
@@ -143,7 +143,7 @@ const Menu = () => {
               />
             </Link>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );

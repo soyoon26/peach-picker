@@ -9,7 +9,7 @@ import Link from "next/link";
 export default function LastView() {
   console.log("마지막");
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="min-w-[1300px] flex flex-col min-h-screen">
       <section className="flex">
         <div className="w-3/4 ">
           <Image
