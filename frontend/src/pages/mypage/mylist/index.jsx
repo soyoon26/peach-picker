@@ -8,8 +8,10 @@ import ViewSelector from "@/components/list/ViewSelector";
 import { useRouter } from "next/router";
 import DarkModeToggle from "@/components/button/DarkModeToggle";
 import darkModeStore from "@/store/darkModeStore";
+import useAuthStore from "../../../store/authStore";
 
 export default function Index() {
+  const { isLoggedIn, isInitialized, initialize } = useAuthStore();
   const router = useRouter();
   const { data, fetchData } = useDrawingStore();
   const { darkMode } = darkModeStore();
@@ -22,6 +24,19 @@ export default function Index() {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  useEffect(() => {
+    if (!isInitialized) {
+      initialize();
+    }
+  }, [initialize, isInitialized]);
+
+  useEffect(() => {
+    if (isInitialized && !isLoggedIn) {
+      alert("로그인 해주세요.");
+      router.push("/login");
+    }
+  }, [isInitialized, isLoggedIn, router]);
 
   useEffect(() => {
     const handler = setTimeout(() => {

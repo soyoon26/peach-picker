@@ -54,11 +54,15 @@ export default function LastView() {
             <div>
               <Link href="/completedDrawings">추첨 기록실</Link>
             </div>
-            <div>내 추첨 보기</div>
+            <div>
+              <Link href="/mypage/mylist">내 추첨 보기</Link>
+            </div>
           </article>
           <article className="w-1/6 pt-10">
             <div className="pb-2 font-bold">고객 서비스</div>
-            <div>회원 가입</div>
+            <div>
+              <Link href="/login">회원 가입</Link>
+            </div>
             <div>
               <a
                 href="https://pf.kakao.com/_vxhxixoG"
