@@ -3,6 +3,7 @@ import Head from "next/head";
 import circle from "../../images/circle.png";
 import greenEffect from "../../images/greeny.png";
 import peach from "../../images/3dpeach.png";
+import mainpeach from "../../../public/mainpeach.png";
 import blue_heart from "../../images/blue_heart.png";
 import main_picker from "../../images/main-picker.png";
 import main_letter from "../../images/mainLetter.webp";
@@ -16,7 +17,7 @@ export default function Home() {
   const [visibleLetters, setVisibleLetters] = useState([]);
   console.log("첫번째");
   return (
-    <div className="flex flex-col w-screen h-screen bg-[#FFF8F2]">
+    <div className="min-w-[1300px] flex flex-col w-screen h-screen bg-[#FFF8F2]">
       <Head>
         <link
           href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
@@ -25,34 +26,59 @@ export default function Home() {
       </Head>
       <Menu />
       <div className="flex flex-col justify-between flex-grow">
-        <section className="w-2/3 mt-5 ml-10">
-          <div className="text-9xl font-Remboy">Peach Picker</div>
-          <div className="text-7xl font-Remboy">WE CAN MAKE A DIFFERENCE</div>
-          {/* <Image src={main_letter} alt="main" layout="responsive" width={100} /> */}
-        </section>
+        <div className="flex">
+          <section className="w-2/3 mt-5 ml-10">
+            <div>
+              <div className="text-9xl font-Remboy">Peach Picker</div>
+              <div className="text-7xl font-Remboy">
+                WE CAN MAKE A DIFFERENCE
+              </div>
+              {/* <Image src={main_letter} alt="main" layout="responsive" width={100} /> */}
+            </div>
+          </section>
+          <section className="w-1/3 pt-[100px] flex items-center">
+            <Image
+              src={mainpeach}
+              alt="mainpeach"
+              layout="fixed"
+              height={400}
+              width={400}
+            />
+          </section>
+        </div>
+
         <div className="flex flex-col justify-end flex-grow">
           <section className="flex">
-            <div className="flex flex-col w-1/4 p-4 my-5 ml-10 text-2xl bg-white border-2 border-black ">
-              <div>PEACH-DAY</div>
-              <div className="flex flex-col w-full border border-black "></div>
-              <div>26/06/2024</div>
+            <div className="flex flex-col w-1/4 px-3 pt-2 my-5 ml-10 text-2xl bg-white border-2 border-black">
+              <div className="flex items-center justify-start h-1/2">
+                PEACH-DAY
+              </div>
+              <div className="w-full border-t border-b border-black "></div>
+              <div className="flex items-center pt-2 justify-start h-1/2">
+                26/06/2024
+              </div>
             </div>
-            <div className="flex flex-col w-1/4 p-4 my-5 ml-10 text-2xl bg-white border-2 border-black ">
-              <div>IG</div>
-              <div className="flex flex-col w-full border border-black "></div>
-              <div>@peachpicker_official</div>
+
+            <div className="min-w-[300px] flex flex-col w-1/4 px-3 pt-3 my-5 ml-10 text-2xl bg-white border-2 border-black">
+              <div className="flex items-center justify-start h-1/2">IG</div>{" "}
+              <div className="w-full border-t border-b border-black my-2"></div>
+              <div className="flex items-center justify-start h-1/2">
+                @peachpicker_official
+              </div>
             </div>
-            <div className="flex w-1/2 p-4 my-5 ml-10 mr-10 text-2xl text-left bg-white border-2 border-black ">
+
+            <div className="min-w-[490px] flex w-1/2 px-3 pt-3 my-5 ml-10 mr-10 text-2xl text-left bg-white border-2 border-black ">
               <div className="flex flex-col justify-between flex-grow">
                 <div>E-MAIL</div>
                 <div className="flex flex-col w-full border border-black "></div>
                 <div>peach.patch.picker@gmail.com</div>
               </div>
-              <div className="flex items-end justify-end w-1/6 ml-4">
+              <div className="flex items-center justify-end pb-3 w-1/6 ml-4">
                 <Image
                   src={earth}
                   alt="earth"
-                  layout="responsive"
+                  layout="fixed"
+                  height={50}
                   width={100}
                 />
               </div>

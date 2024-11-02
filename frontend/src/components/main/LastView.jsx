@@ -9,25 +9,29 @@ import Link from "next/link";
 export default function LastView() {
   console.log("마지막");
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="min-w-[1300px] flex flex-col min-h-screen">
       <section className="flex">
         <div className="w-3/4 ">
-          <Image
-            src={brandstory}
-            width={100}
-            height={100}
-            layout="responsive"
-            alt="logo"
-          />
+          <Link href="/brandstory" passHref>
+            <Image
+              src={brandstory}
+              width={100}
+              height={100}
+              layout="responsive"
+              alt="logo"
+            />
+          </Link>
         </div>
         <div className="w-1/4 p-10 pr-16">
-          <Image
-            src={lottery}
-            width={100}
-            height={100}
-            layout="responsive"
-            alt="logo"
-          />
+          <Link href="/brandstory" passHref>
+            <Image
+              src={lottery}
+              width={100}
+              height={100}
+              layout="responsive"
+              alt="logo"
+            />
+          </Link>
         </div>
       </section>
       <section className="flex flex-col w-full bg-white">
@@ -54,11 +58,15 @@ export default function LastView() {
             <div>
               <Link href="/completedDrawings">추첨 기록실</Link>
             </div>
-            <div>내 추첨 보기</div>
+            <div>
+              <Link href="/mypage/mylist">내 추첨 보기</Link>
+            </div>
           </article>
           <article className="w-1/6 pt-10">
             <div className="pb-2 font-bold">고객 서비스</div>
-            <div>회원 가입</div>
+            <div>
+              <Link href="/login">회원 가입</Link>
+            </div>
             <div>
               <a
                 href="https://pf.kakao.com/_vxhxixoG"

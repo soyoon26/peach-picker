@@ -67,7 +67,7 @@ function App() {
   return (
     <div
       id="fullpage"
-      className="relative h-screen overflow-hidden snap-y snap-mandatory"
+      className="min-w-[1300px] relative h-screen overflow-hidden snap-y snap-mandatory"
     >
       <div className="flex w-full h-screen section snap-start">
         <FirstView />
