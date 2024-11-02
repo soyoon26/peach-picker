@@ -36,7 +36,7 @@ export default function Home() {
               {/* <Image src={main_letter} alt="main" layout="responsive" width={100} /> */}
             </div>
           </section>
-          <section className="w-1/3 pt-[100px] flex items-center">
+          <section className="w-1/3 pt-[65px] flex items-center">
             <Image
               src={mainpeach}
               alt="mainpeach"
