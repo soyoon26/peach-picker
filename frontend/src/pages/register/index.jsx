@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ko } from "date-fns/locale";
 import { useRouter } from "next/router";
 import { DayPicker } from "react-day-picker";
@@ -6,11 +6,12 @@ import "react-day-picker/dist/style.css";
 import Time from "../../components/register/Time";
 import ImgUpload from "@/components/register/ImgUpload";
 import useAuthStore from "../../store/authStore";
-import useDrawingStore from "../../store/drawingStore"; // 스토어 import
+import useDrawingStore from "../../store/drawingStore";
 import Button from "@/components/button/Button";
 import axios from "axios";
 
 export default function Register() {
+  const { isLoggedIn, isInitialized, initialize } = useAuthStore();
   const [isOpen, setIsOpen] = useState(false);
   const [calOpen, setCalOpen] = useState(false);
   const [formatDay, setFormatDay] = useState("날짜 선택");
@@ -24,6 +25,19 @@ export default function Register() {
   const { token } = useAuthStore();
   const { addNewDrawing } = useDrawingStore();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!isInitialized) {
+      initialize();
+    }
+  }, [initialize, isInitialized]);
+
+  useEffect(() => {
+    if (isInitialized && !isLoggedIn) {
+      alert("로그인 해주세요.");
+      router.push("/login");
+    }
+  }, [isInitialized, isLoggedIn, router]);
 
   const dropDown = () => {
     setIsOpen(!isOpen);

@@ -6,6 +6,7 @@ import paper from "../../images/paper.jpg";
 import logo from "../../images/thirdLogo.png";
 import to from "../../images/to.png";
 import registernow from "../../images/registernow.png";
+import { useRouter } from "next/router";
 
 const Section1 = memo(() => {
   const images = [paper];
@@ -47,7 +48,7 @@ const Section1 = memo(() => {
 });
 
 const Section2 = memo(() => {
-  console.log("22222");
+  const router = useRouter();
   const images = [waterpeach, drypeach];
   const [index, setIndex] = useState(0);
 
@@ -59,6 +60,9 @@ const Section2 = memo(() => {
     return () => clearInterval(interval);
   }, [images.length]);
 
+  const handleClick = () => {
+    router.push("/register");
+  };
   return (
     <div className="relative flex-shrink-0 w-1/3 pt-4">
       <div className="pb-4 mr-8">
@@ -69,7 +73,8 @@ const Section2 = memo(() => {
         src={images[index]}
         layout="responsive"
         alt="section 2 image"
-        className="m-2 mb-10"
+        className="m-2 mb-10 cursor-pointer"
+        onClick={handleClick}
       />
     </div>
   );

@@ -1,7 +1,8 @@
 import React, { useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
-const Carousel = ({ images }) => {
+const Carousel = ({ images, links }) => {
   const carouselRef = useRef(null);
 
   const scrollLeft = () => {
@@ -37,14 +38,16 @@ const Carousel = ({ images }) => {
       >
         {images.map((image, index) => (
           <div key={index} className="flex-shrink-0 w-1/5 snap-center">
-            <Image
-              src={image}
-              layout="responsive"
-              width={80}
-              height={80}
-              alt={`Slide ${index + 1}`}
-              className="m-1"
-            />
+            <Link href={links[index]} passHref>
+              <Image
+                src={image}
+                layout="responsive"
+                width={80}
+                height={80}
+                alt={`Slide ${index + 1}`}
+                className="m-1"
+              />
+            </Link>
           </div>
         ))}
       </div>
