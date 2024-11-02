@@ -3,6 +3,7 @@ import Head from "next/head";
 import circle from "../../images/circle.png";
 import greenEffect from "../../images/greeny.png";
 import peach from "../../images/3dpeach.png";
+import mainpeach from "../../../public/mainpeach.png";
 import blue_heart from "../../images/blue_heart.png";
 import main_picker from "../../images/main-picker.png";
 import main_letter from "../../images/mainLetter.webp";
@@ -25,11 +26,27 @@ export default function Home() {
       </Head>
       <Menu />
       <div className="flex flex-col justify-between flex-grow">
-        <section className="w-2/3 mt-5 ml-10">
-          <div className="text-9xl font-Remboy">Peach Picker</div>
-          <div className="text-7xl font-Remboy">WE CAN MAKE A DIFFERENCE</div>
-          {/* <Image src={main_letter} alt="main" layout="responsive" width={100} /> */}
-        </section>
+        <div className="flex">
+          <section className="w-2/3 mt-5 ml-10">
+            <div>
+              <div className="text-9xl font-Remboy">Peach Picker</div>
+              <div className="text-7xl font-Remboy">
+                WE CAN MAKE A DIFFERENCE
+              </div>
+              {/* <Image src={main_letter} alt="main" layout="responsive" width={100} /> */}
+            </div>
+          </section>
+          <section className="w-1/3 pt-[100px] flex items-center">
+            <Image
+              src={mainpeach}
+              alt="mainpeach"
+              layout="fixed"
+              height={400}
+              width={400}
+            />
+          </section>
+        </div>
+
         <div className="flex flex-col justify-end flex-grow">
           <section className="flex">
             <div className="flex flex-col w-1/4 px-3 pt-2 my-5 ml-10 text-2xl bg-white border-2 border-black">

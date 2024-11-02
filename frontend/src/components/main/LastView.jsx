@@ -12,22 +12,26 @@ export default function LastView() {
     <div className="min-w-[1300px] flex flex-col min-h-screen">
       <section className="flex">
         <div className="w-3/4 ">
-          <Image
-            src={brandstory}
-            width={100}
-            height={100}
-            layout="responsive"
-            alt="logo"
-          />
+          <Link href="/brandstory" passHref>
+            <Image
+              src={brandstory}
+              width={100}
+              height={100}
+              layout="responsive"
+              alt="logo"
+            />
+          </Link>
         </div>
         <div className="w-1/4 p-10 pr-16">
-          <Image
-            src={lottery}
-            width={100}
-            height={100}
-            layout="responsive"
-            alt="logo"
-          />
+          <Link href="/brandstory" passHref>
+            <Image
+              src={lottery}
+              width={100}
+              height={100}
+              layout="responsive"
+              alt="logo"
+            />
+          </Link>
         </div>
       </section>
       <section className="flex flex-col w-full bg-white">
