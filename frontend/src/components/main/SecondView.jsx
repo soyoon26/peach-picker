@@ -10,10 +10,10 @@ export default function SecondView() {
   const images = [register, dailycheck, follow, possible, tips];
   const links = [
     "/register",
-    "/dailycheck",
+    "/about",
     "https://www.instagram.com/peachpicker_official?igsh=MTBpc282aTBjcWRvYQ%3D%3D&utm_source=qr",
     "/drawings",
-    "/tips",
+    "/brandstory",
   ];
   console.log("두번째");
   return (
