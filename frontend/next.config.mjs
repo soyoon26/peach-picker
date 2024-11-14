@@ -14,15 +14,15 @@ const nextConfig = {
     CLIENT_ENV: process.env.CLIENT_ENV,
     REDIRECT_URL: process.env.REDIRECT_URL,
   },
-  async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: `${process.env.NEXT_PUBLIC_API_URL}/:path*`,
-      },
-    ];
-  },
-  output: "export",
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: "/api/:path*",
+  //       destination: `${process.env.NEXT_PUBLIC_API_URL}/:path*`,
+  //     },
+  //   ];
+  // },
+  // output: "export",
 };
 
 export default nextConfig;
