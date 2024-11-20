@@ -131,7 +131,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mb-10 ">
+    <div className="mb-10 center1 ">
       <Image
         src={peach_logo}
         width={200}

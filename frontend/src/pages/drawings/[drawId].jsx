@@ -108,7 +108,7 @@ export default function DrawId() {
   if (!data) {
     return (
       <div
-        className={`flex items-center justify-center h-screen ${
+        className={`center2 h-screen ${
           darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
         }`}
       >
@@ -148,7 +148,7 @@ export default function DrawId() {
         </div>
         <section className="flex-col w-1/2 center1">
           {showRoulette && winners.length > 0 ? (
-            <div className="flex flex-col items-center justify-center w-full mt-10">
+            <div className="w-full mt-10 center1">
               <Wheel
                 names={data.participants.map(
                   (p) => `${p.name} ${p.phone.slice(-4)}`

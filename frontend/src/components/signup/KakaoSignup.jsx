@@ -49,7 +49,7 @@ const KakaoSignup = () => {
   return (
     <div
       onClick={handleKakaoSignup}
-      className="mb-5 w-full justify-center flex items-center py-3 border-[1px] border-solid border-[#808080]"
+      className="mb-5 w-full center2 py-3 border-[1px] border-solid border-[#808080]"
     >
       <Image src={kakao} width={20} alt="Kakao Login" />
       <div className="ml-5">카카오 회원가입</div>

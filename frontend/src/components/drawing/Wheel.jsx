@@ -129,7 +129,7 @@ export default function Wheel({
     }
   }, [selectedWinner]);
   return (
-    <div className="flex flex-col items-center justify-center w-full bg-gray-100">
+    <div className="w-full bg-gray-100 center1">
       <div className="relative">
         <canvas
           id="wheelCanvas"

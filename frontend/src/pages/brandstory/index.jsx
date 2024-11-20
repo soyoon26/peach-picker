@@ -34,18 +34,18 @@ const Index = () => {
   };
 
   return (
-    <div className="p-6 space-y-20 overflow-y-auto bg-gradient-to-b from-gray-50 to-white min-h-screen">
+    <div className="min-h-screen p-6 space-y-20 overflow-y-auto bg-gradient-to-b from-gray-50 to-white">
       <motion.article
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.8 }}
         variants={fadeInVariants}
-        className="space-y-4 bg-white p-8 rounded-lg shadow-lg transition-transform duration-500 ease-in-out transform hover:scale-105"
+        className="p-8 space-y-4 transition-transform duration-500 ease-in-out transform bg-white rounded-lg shadow-lg hover:scale-105"
       >
-        <div className="text-3xl font-bold text-center text-gray-800 mb-4">
+        <div className="mb-4 text-3xl font-bold text-center text-gray-800">
           피치피커의 비전
         </div>
-        <div className="flex justify-center">
+        <div className="fj">
           <Image
             src={justice}
             width={700}
@@ -65,12 +65,12 @@ const Index = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.8 }}
         variants={fadeInVariants}
-        className="space-y-4 bg-white p-8 rounded-lg shadow-lg transition-transform duration-500 ease-in-out transform hover:scale-105"
+        className="p-8 space-y-4 transition-transform duration-500 ease-in-out transform bg-white rounded-lg shadow-lg hover:scale-105"
       >
-        <div className="text-3xl font-bold text-center text-gray-800 mb-4">
+        <div className="mb-4 text-3xl font-bold text-center text-gray-800">
           피치피커의 새로움
         </div>
-        <div className="flex justify-center">
+        <div className="fj">
           <Image
             src={game}
             width={700}
@@ -91,12 +91,12 @@ const Index = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.8 }}
         variants={fadeInVariants}
-        className="space-y-4 bg-white p-8 rounded-lg shadow-lg transition-transform duration-500 ease-in-out transform hover:scale-105"
+        className="p-8 space-y-4 transition-transform duration-500 ease-in-out transform bg-white rounded-lg shadow-lg hover:scale-105"
       >
-        <div className="text-3xl font-bold text-center text-gray-800 mb-4">
+        <div className="mb-4 text-3xl font-bold text-center text-gray-800">
           피치피커의 가치
         </div>
-        <div className="flex justify-center">
+        <div className="fj">
           <Image
             src={people}
             width={700}
@@ -117,12 +117,12 @@ const Index = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.8 }}
         variants={fadeInVariants}
-        className="space-y-4 bg-white p-8 rounded-lg shadow-lg transition-transform duration-500 ease-in-out transform hover:scale-105"
+        className="p-8 space-y-4 transition-transform duration-500 ease-in-out transform bg-white rounded-lg shadow-lg hover:scale-105"
       >
-        <div className="text-3xl font-bold text-center text-gray-800 mb-4">
+        <div className="mb-4 text-3xl font-bold text-center text-gray-800">
           피치피커의 다양성
         </div>
-        <div className="flex justify-center">
+        <div className="fj">
           <Image
             src={diversity}
             width={700}
@@ -143,12 +143,12 @@ const Index = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.8 }}
         variants={fadeInVariants}
-        className="space-y-4 bg-white p-8 rounded-lg shadow-lg transition-transform duration-500 ease-in-out transform hover:scale-105"
+        className="p-8 space-y-4 transition-transform duration-500 ease-in-out transform bg-white rounded-lg shadow-lg hover:scale-105"
       >
-        <div className="text-3xl font-bold text-center text-gray-800 mb-4">
+        <div className="mb-4 text-3xl font-bold text-center text-gray-800">
           피치피커의 커뮤니티
         </div>
-        <div className="flex justify-center">
+        <div className="fj">
           <Image
             src={link}
             width={700}
@@ -167,7 +167,7 @@ const Index = () => {
       {showButton && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-10 right-10 p-3 bg-rose-400 text-white rounded-full shadow-lg hover:bg-rose-400 transition duration-300"
+          className="fixed p-3 text-white transition duration-300 rounded-full shadow-lg bottom-10 right-10 bg-rose-400 hover:bg-rose-400"
         >
           <FaArrowUp size={20} />
         </button>

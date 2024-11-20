@@ -159,14 +159,14 @@ export default function Register() {
 
   return (
     <div
-      className="mt-20 flex flex-col items-center min-w-[1000px] justify-center w-full"
+      className="mt-20 center1 min-w-[1000px]  w-full"
       style={{ height: "calc(100vh - 100px)" }}
     >
       <div className="w-1/5 mt-20">
         <ImgUpload onImageSelect={handleImageSelect} />
       </div>
 
-      <div className="flex items-center justify-center w-1/2">
+      <div className="w-1/2 center2">
         <div className="text-right mr-2 w-[150px] font-bold">일시 :</div>
         <div className="relative w-3/5 h-[40px]">
           <div
@@ -179,7 +179,7 @@ export default function Register() {
             <div className="ml-2">▼</div>
           </div>
           {calOpen && (
-            <div className="absolute z-20 mt-2 w-[330px] right-0 justify-center items-center flex bg-white border border-gray-300 rounded shadow-lg">
+            <div className="absolute z-20 mt-2 w-[330px] right-0 center2 bg-white border border-gray-300 rounded shadow-lg">
               <DayPicker
                 locale={ko}
                 mode="single"
@@ -193,7 +193,7 @@ export default function Register() {
         <Time onTimeChange={setSelectedTime} />
       </div>
 
-      <div className="flex items-center justify-center w-1/2 m-4">
+      <div className="w-1/2 m-4 center2">
         <div className="text-right mr-2 w-[150px] font-bold">이벤트 명 :</div>
         <div className="w-full h-[40px] flex flex-row items-center justify-start py-[8px] px-[16px] bg-[#fff] border-[1px] border-solid border-[#e0e0e0] rounded-[8px]">
           <input
@@ -205,7 +205,7 @@ export default function Register() {
         </div>
       </div>
 
-      <div className="flex items-center justify-center w-1/2 mb-4">
+      <div className="w-1/2 mb-4 center2">
         <div className="text-right mr-2 w-[150px] font-bold">당첨자 수 :</div>
         <div className="w-full h-[40px] flex flex-row items-center justify-start py-[8px] px-[16px] bg-[#fff] border-[1px] border-solid border-[#e0e0e0] rounded-[8px]">
           <input
@@ -217,7 +217,7 @@ export default function Register() {
         </div>
       </div>
 
-      <div className="relative flex items-center justify-center w-1/2 mb-4 z-1">
+      <div className="relative w-1/2 mb-4 center2 z-1">
         <div className="text-right mr-2 w-[150px] font-bold">추첨 방법 :</div>
         <div
           className="relative w-full h-[40px] flex flex-row items-center justify-start py-[8px] px-[16px] bg-[#fff] border-[1px] border-solid border-[#e0e0e0] rounded-[8px] cursor-pointer"
@@ -252,7 +252,7 @@ export default function Register() {
         </div>
       </div>
 
-      <div className="flex items-center justify-center w-1/2 mb-10">
+      <div className="w-1/2 mb-10 center2">
         <div className="text-right mr-2 mt-6 w-[150px] font-bold">명단 :</div>
         <div className="w-full text-[12px] whitespace-nowrap">
           ※ 휴대폰 번호가 있는 명단을 등록해주세요.
@@ -265,7 +265,7 @@ export default function Register() {
                 {selectedFile ? selectedFile.name : "파일을 등록해주세요."}
               </div>
             </div>
-            <div className="flex items-center justify-center bg-[#d9d9d9] rounded-[5px] px-4 ml-2">
+            <div className="center2 bg-[#d9d9d9] rounded-[5px] px-4 ml-2">
               <label style={{ cursor: "pointer" }} htmlFor="csvFileInput">
                 <input
                   type="file"

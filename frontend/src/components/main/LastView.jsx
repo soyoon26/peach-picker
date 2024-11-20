@@ -37,7 +37,7 @@ export default function LastView() {
       <section className="flex flex-col w-full bg-white">
         <div className="flex flex-col w-full h-0 border border-gray-500 "></div>
         <div className="flex ">
-          <div className="flex items-center justify-center w-1/6 ">
+          <div className="w-1/6 center2 ">
             <div className="w-3/4 ">
               <div className="text-5xl font-Radio text-rose-400">피치피커</div>
               {/* <Image

@@ -172,7 +172,7 @@ export default function Index() {
 
   return (
     <div
-      className={`flex flex-col items-center justify-center min-h-screen ${
+      className={`center1 min-h-screen ${
         darkMode ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"
       }`}
     >
