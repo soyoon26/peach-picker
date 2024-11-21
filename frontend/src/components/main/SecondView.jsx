@@ -46,7 +46,7 @@ export default function SecondView() {
   }, [data]);
 
   return (
-    <div className="flex flex-col items-center justify-center h-full space-y-6">
+    <div className="h-full space-y-6 center1">
       <section className="w-5/6 max-w-full mb-4">
         <div className="pl-10 mb-2 text-lg font-bold">실시간 추첨 랭킹</div>
         <Carousel images={rankingImages} links={rankingLinks} />

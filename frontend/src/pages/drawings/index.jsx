@@ -159,7 +159,7 @@ export default function Index() {
 
   return (
     <div
-      className={`flex flex-col items-center justify-center min-h-screen ${
+      className={`center1 min-h-screen ${
         darkMode ? "bg-gray-900" : "bg-gray-50"
       }`}
     >
@@ -176,7 +176,7 @@ export default function Index() {
         <DarkModeToggle />
       </div>
       {filteredData.length === 0 ? (
-        <div className="flex items-center justify-center w-4/5 h-32 mt-20 text-xl font-bold text-gray-600 bg-gray-100 rounded-md dark:text-white dark:bg-gray-500">
+        <div className="w-4/5 h-32 mt-20 text-xl font-bold text-gray-600 bg-gray-100 rounded-md center2 dark:text-white dark:bg-gray-500">
           진행중인 이벤트가 없습니다.
         </div>
       ) : viewType === "grid" ? (

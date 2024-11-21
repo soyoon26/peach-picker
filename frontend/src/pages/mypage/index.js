@@ -51,17 +51,13 @@ const MyPage = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center mt-10 mb-20">
+    <div className="mt-10 mb-20 center1">
       <MemberInfo
         setUsername={setUsername}
         setEmail={setEmail}
         setProfileImg={setProfileImg}
       />
-      {message && (
-        <div className="flex flex-col items-center justify-center mt-10 mb-20">
-          {message}
-        </div>
-      )}
+      {message && <div className="mt-10 mb-20 center1">{message}</div>}
       <section className="relative mb-10 overflow-hidden rounded-full w-60 h-60">
         <Image
           src={profileImg}
@@ -78,16 +74,16 @@ const MyPage = () => {
       <div className="mt-10 text-[20px] w-[380px] mb-2">나의 추첨 현황</div>
       <div className="w-[383px] h-[138px]">
         <div className="relative w-[383px] h-[138px] bg-[#f8f8f8] border-[1px] border-solid border-[#808080]">
-          <div className="absolute left-[60px] top-0 w-[90px] h-[51px] text-[18px] flex flex-col justify-center">
+          <div className="absolute left-[60px] top-0 w-[90px] h-[51px] text-[18px] fj flex-col ">
             추첨 예정
           </div>
-          <div className="absolute left-[60px] top-[56px] w-[78px] h-[51px] text-[32px] text-center flex flex-col justify-center">
+          <div className="absolute left-[60px] top-[56px] w-[78px] h-[51px] text-[32px] text-center fj flex-col ">
             {upcomingDrawings}
           </div>
-          <div className="absolute left-[250px] top-[56px] w-[78px] h-[51px] text-[32px] text-center flex flex-col justify-center">
+          <div className="absolute left-[250px] top-[56px] w-[78px] h-[51px] text-[32px] text-center fj flex-col ">
             {completedDrawings}
           </div>
-          <div className="absolute left-[250px] top-0 w-[90px] h-[51px] text-[18px] flex flex-col justify-center">
+          <div className="absolute left-[250px] top-0 w-[90px] h-[51px] text-[18px] fjc">
             추첨 완료
           </div>
 

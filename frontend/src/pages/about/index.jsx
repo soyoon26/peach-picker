@@ -43,10 +43,10 @@ const Index = () => {
   const [selectedMember, setSelectedMember] = useState(teamMembers[0]);
 
   return (
-    <div className="p-10 bg-gradient-to-b from-rose-100 to-rose-200 min-h-screen flex flex-col items-center">
-      <div className="font-bold text-3xl m-4">기업 정보</div>
-      <div className="font-bold text-sm  mb-10">팀원</div>
-      <div className="flex justify-center space-x-10 mb-10">
+    <div className="flex flex-col items-center min-h-screen p-10 bg-gradient-to-b from-rose-100 to-rose-200">
+      <div className="m-4 text-3xl font-bold">기업 정보</div>
+      <div className="mb-10 text-sm font-bold">팀원</div>
+      <div className="mb-10 space-x-10 fj">
         {teamMembers.map((member) => (
           <div
             key={member.id}
@@ -57,7 +57,7 @@ const Index = () => {
             }`}
             onClick={() => setSelectedMember(member)}
           >
-            <div className="w-24 h-24 rounded-full overflow-hidden border-4 transition-all duration-300">
+            <div className="w-24 h-24 overflow-hidden transition-all duration-300 border-4 rounded-full">
               <Image
                 src={member.image}
                 alt={member.name}
@@ -78,13 +78,13 @@ const Index = () => {
         ))}
       </div>
 
-      <div className="flex flex-col items-center text-center space-y-4 bg-white shadow-md rounded-lg p-8 max-w-lg w-full">
+      <div className="flex flex-col items-center w-full max-w-lg p-8 space-y-4 text-center bg-white rounded-lg shadow-md">
         <Image
           src={selectedMember.image}
           alt={selectedMember.name}
           width={150}
           height={150}
-          className="rounded-full object-cover"
+          className="object-cover rounded-full"
         />
         <div className="text-2xl font-bold">{selectedMember.name}</div>
         <div className="text-lg text-rose-400">{selectedMember.role}</div>
@@ -94,7 +94,7 @@ const Index = () => {
           href={selectedMember.github}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-grya-500 hover:text-gray-500 flex items-center space-x-2"
+          className="flex items-center space-x-2 text-grya-500 hover:text-gray-500"
         >
           <FaGithub size={24} />
           <span>GitHub</span>

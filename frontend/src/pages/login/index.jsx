@@ -83,7 +83,7 @@ const Index = () => {
 
   return (
     <div className="flex flex-col mt-20 overflow-hidden">
-      <div className="flex items-center justify-center flex-grow">
+      <div className="flex-grow center2">
         <div className="flex flex-col items-center center1">
           <div className="text-6xl font-Radio">피치피커</div>
 

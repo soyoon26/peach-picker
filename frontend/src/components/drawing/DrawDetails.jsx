@@ -4,7 +4,7 @@ import present from "../../images/present.png";
 
 export default function DrawDetails({ data, darkMode, DarkModeToggle }) {
   return (
-    <section className="flex flex-col justify-center w-full pl-8">
+    <section className="flex-col w-full pl-8 fj">
       <div>
         <div className="flex justify-between mb-2 ml-4 text-2xl font-bold dark:text-gray-100">
           <div className="flex">

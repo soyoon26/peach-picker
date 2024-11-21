@@ -73,9 +73,17 @@ body {
   }
   .center2 {
     display: flex;
-
     justify-content: center;
     align-items: center;
+  }
+  .fj {
+    display: flex;
+    justify-content: center;
+  }
+  .fjc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 }
 

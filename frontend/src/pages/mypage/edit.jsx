@@ -106,9 +106,9 @@ export default function Edit() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="center1">
       <div className="w-2/3 mb-20 relative max-w-[606px] flex flex-col">
-        <div className="relative mb-1 mt-15 left-0 w-[103px] h-[38px] text-[20px] flex flex-col justify-center">
+        <div className="relative mb-1 mt-15 left-0 w-[103px] h-[38px] text-[20px] fj flex-col ">
           회원 정보
         </div>
         <div className="w-full mb-3 h-0 border-[1px] border-solid border-[#000]"></div>
@@ -155,10 +155,10 @@ export default function Edit() {
         onClose={() => setIsDeleteModalOpen(false)}
         message="정말로 탈퇴하시겠습니까?"
       >
-        <div className="flex w-full justify-end mt-4">
+        <div className="flex justify-end w-full mt-4">
           <Button
             text="네"
-            className="bg-white border w-full border-gray-500 text-gray-500"
+            className="w-full text-gray-500 bg-white border border-gray-500"
             onClick={handleDeleteAccount}
           />
         </div>

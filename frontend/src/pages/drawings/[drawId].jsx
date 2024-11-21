@@ -10,11 +10,14 @@ import Confetti from "react-confetti";
 import darkModeStore from "@/store/darkModeStore";
 import { useRouter } from "next/router";
 import DarkModeToggle from "@/components/button/DarkModeToggle";
+import LottoBox from "@/components/drawing/LottoBox";
+import useWinnerStore from "@/store/winnerStore";
 
 export default function DrawId() {
   const [data, setData] = useState(null);
   const [showRoulette, setShowRoulette] = useState(false);
   const [winners, setWinners] = useState([]);
+  const [lottoWinners, setLottoWinners] = useState([]);
   const [currentWinnerIndex, setCurrentWinnerIndex] = useState(0);
   const [isConfettiVisible, setIsConfettiVisible] = useState(false);
   const [isRouletteFinished, setIsRouletteFinished] = useState(false);
@@ -24,6 +27,24 @@ export default function DrawId() {
   const { drawId, from, viewType } = router.query;
 
   const handleBackToList = () => {};
+  const handleWinnerCompleted = () => {
+    // 모든 당첨자가 소모되었는지 확인
+    if (currentWinnerIndex < winners.length - 1) {
+      setCurrentWinnerIndex((prev) => prev + 1); // 다음 당첨자로 이동
+    } else {
+      setShowRoulette(false); // 룰렛 종료
+      setIsRouletteFinished(true); // 추첨 완료 상태 설정
+      setIsConfettiVisible(true); // 축하 애니메이션 표시
+
+      // 축하 애니메이션 30초 후 종료
+      setTimeout(() => {
+        setIsConfettiVisible(false);
+      }, 30000);
+      clearWinners();
+      // 추가적인 작업이 있다면 여기서 처리
+      console.log("모든 추첨이 완료되었습니다.");
+    }
+  };
 
   useEffect(() => {
     if (drawId) {
@@ -51,6 +72,7 @@ export default function DrawId() {
               (participant) => participant.winner
             );
             setWinners(filteredWinners);
+            setLottoWinners(["로또 시작", ...filteredWinners]);
             setShowRoulette(true);
           }
         } catch (error) {
@@ -100,7 +122,6 @@ export default function DrawId() {
       setTimeout(() => {
         setIsConfettiVisible(false);
       }, 30000);
-
       document.querySelector(".emoji-rain-container").classList.add("show");
     }
   };
@@ -108,7 +129,7 @@ export default function DrawId() {
   if (!data) {
     return (
       <div
-        className={`flex items-center justify-center h-screen ${
+        className={`center2 h-screen ${
           darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
         }`}
       >
@@ -148,14 +169,23 @@ export default function DrawId() {
         </div>
         <section className="flex-col w-1/2 center1">
           {showRoulette && winners.length > 0 ? (
-            <div className="flex flex-col items-center justify-center w-full mt-10">
-              <Wheel
+            <div className="w-full mt-10 center1">
+              {/* <Wheel
                 names={data.participants.map(
                   (p) => `${p.name} ${p.phone.slice(-4)}`
                 )}
                 selectedWinner={`${winners[currentWinnerIndex]?.name} ${winners[
                   currentWinnerIndex
                 ]?.phone.slice(-4)}`}
+                onSpinEnd={handleSpinEnd}
+              /> */}{" "}
+              <LottoBox
+                names={data.participants.map(
+                  (p) => `${p.name} ${p.phone.slice(-4)}`
+                )} // 응모자 정보 전달
+                selectedWinner={`${winners[currentWinnerIndex]?.name} ${winners[
+                  currentWinnerIndex
+                ]?.phone.slice(-4)}`} // 당첨자 정보 전달
                 onSpinEnd={handleSpinEnd}
               />
             </div>
