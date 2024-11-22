@@ -91,6 +91,7 @@ export default function Index() {
                 drawId: row.original.id,
                 from: "completedDrawings",
                 viewType,
+                drawingType: row.original.drawingType,
               },
             }}
             as={`/drawings/${row.original.id}`}

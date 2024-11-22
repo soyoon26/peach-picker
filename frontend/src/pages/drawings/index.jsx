@@ -27,7 +27,7 @@ export default function Index() {
 
   useEffect(() => {
     const now = new Date();
-    const fiveMinutesAgo = new Date(now.getTime() - 5 * 60 * 1000);
+    const fiveMinutesAgo = new Date(now.getTime() - 1 * 60 * 1000);
 
     let sortedDrawings = data.filter(
       (item) => new Date(item.drawingAt) > fiveMinutesAgo
@@ -79,7 +79,11 @@ export default function Index() {
           <Link
             href={{
               pathname: "/drawings/[drawId]",
-              query: { drawId: row.original.id, from: "drawings", viewType },
+              query: {
+                drawId: row.original.id,
+                from: "drawings",
+                viewType,
+              },
             }}
             passHref
           >
@@ -118,6 +122,7 @@ export default function Index() {
         ),
         Cell: ({ value }) => <div>{value}명</div>,
       },
+
       {
         accessor: "organizer",
         Header: (
