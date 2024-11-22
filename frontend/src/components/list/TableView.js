@@ -30,7 +30,7 @@ const TableView = ({ columns, data }) => {
             <tr
               key={headerGroup.id}
               {...headerGroup.getHeaderGroupProps()}
-              className="bg-gray-100"
+              className="border-black border-y-2"
             >
               {headerGroup.headers.map((column) => (
                 <th
@@ -51,7 +51,7 @@ const TableView = ({ columns, data }) => {
               <tr
                 key={row.id}
                 {...row.getRowProps()}
-                className="hover:bg-rose-200"
+                className="transition duration-300 hover:bg-rose-100 hover:shadow-lg"
               >
                 {row.cells.map((cell) => (
                   <td
