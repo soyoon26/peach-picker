@@ -124,6 +124,15 @@ export default function Index() {
         ),
       },
       {
+        accessor: "drawingType",
+        Header: (
+          <div className="text-center text-gray-800 dark:text-gray-100">
+            추첨 방법
+          </div>
+        ),
+        Cell: ({ value }) => <div>{value}</div>,
+      },
+      {
         accessor: "winner",
         Header: (
           <div className="text-center text-gray-800 dark:text-gray-100">

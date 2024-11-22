@@ -16,7 +16,7 @@ export default function GridView({
           {category}
         </div>
       </div>
-      <div className=" grid grid-cols-1 gap-6 mx-16 mb-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-6 mx-16 mb-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {data.map((data) => (
           <Link
             href={{
@@ -75,6 +75,9 @@ export default function GridView({
                   </span>
                 </p>
               )}
+              <p className="ml-2 text-gray-700 dark:text-gray-100">
+                추첨 방법: {data.drawingType}
+              </p>
               <p className="ml-2 text-gray-700 dark:text-gray-100">
                 조회: {data.viewCount}
               </p>

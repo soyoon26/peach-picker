@@ -106,7 +106,10 @@ export default function DrawId() {
         setIsConfettiVisible(false);
       }, 30000);
 
-      document.querySelector(".emoji-rain-container").classList.add("show");
+      const emojiContainer = document.querySelector(".emoji-rain-container");
+      if (emojiContainer) {
+        emojiContainer.classList.add("show");
+      }
     }
   };
 
