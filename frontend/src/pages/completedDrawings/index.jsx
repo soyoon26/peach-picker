@@ -91,6 +91,7 @@ export default function Index() {
                 drawId: row.original.id,
                 from: "completedDrawings",
                 viewType,
+                drawingType: row.original.drawingType,
               },
             }}
             as={`/drawings/${row.original.id}`}
@@ -121,6 +122,15 @@ export default function Index() {
             })}
           </div>
         ),
+      },
+      {
+        accessor: "drawingType",
+        Header: (
+          <div className="text-center text-gray-800 dark:text-gray-100">
+            추첨 방법
+          </div>
+        ),
+        Cell: ({ value }) => <div>{value}</div>,
       },
       {
         accessor: "winner",

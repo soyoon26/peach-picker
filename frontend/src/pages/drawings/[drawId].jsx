@@ -11,39 +11,23 @@ import darkModeStore from "@/store/darkModeStore";
 import { useRouter } from "next/router";
 import DarkModeToggle from "@/components/button/DarkModeToggle";
 import LottoBox from "@/components/drawing/LottoBox";
-import useWinnerStore from "@/store/winnerStore";
+import useDrawingStore from "@/store/drawingStore";
 
 export default function DrawId() {
-  const [data, setData] = useState(null);
+  const { data, fetchData } = useDrawingStore(); // 데이터 가져오기
+  const [datas, setDatas] = useState(null);
   const [showRoulette, setShowRoulette] = useState(false);
   const [winners, setWinners] = useState([]);
-  const [lottoWinners, setLottoWinners] = useState([]);
   const [currentWinnerIndex, setCurrentWinnerIndex] = useState(0);
   const [isConfettiVisible, setIsConfettiVisible] = useState(false);
   const [isRouletteFinished, setIsRouletteFinished] = useState(false);
   const [isDrawNotificationShown, setIsDrawNotificationShown] = useState(false);
   const router = useRouter();
   const { darkMode } = darkModeStore();
-  const { drawId, from, viewType } = router.query;
+  const { drawId, from, viewType, drawingType = "룰렛" } = router.query;
 
-  const handleBackToList = () => {};
-  const handleWinnerCompleted = () => {
-    // 모든 당첨자가 소모되었는지 확인
-    if (currentWinnerIndex < winners.length - 1) {
-      setCurrentWinnerIndex((prev) => prev + 1); // 다음 당첨자로 이동
-    } else {
-      setShowRoulette(false); // 룰렛 종료
-      setIsRouletteFinished(true); // 추첨 완료 상태 설정
-      setIsConfettiVisible(true); // 축하 애니메이션 표시
-
-      // 축하 애니메이션 30초 후 종료
-      setTimeout(() => {
-        setIsConfettiVisible(false);
-      }, 30000);
-      clearWinners();
-      // 추가적인 작업이 있다면 여기서 처리
-      console.log("모든 추첨이 완료되었습니다.");
-    }
+  const handleBackToList = () => {
+    router.push("/completedDrawings");
   };
 
   useEffect(() => {
@@ -60,7 +44,7 @@ export default function DrawId() {
           );
 
           const result = response.data;
-          setData(result);
+          setDatas(result);
 
           await axios.post(
             `${process.env.NEXT_PUBLIC_API_URL}/drawing/${drawId}/increment-view`
@@ -72,7 +56,6 @@ export default function DrawId() {
               (participant) => participant.winner
             );
             setWinners(filteredWinners);
-            setLottoWinners(["로또 시작", ...filteredWinners]);
             setShowRoulette(true);
           }
         } catch (error) {
@@ -88,8 +71,8 @@ export default function DrawId() {
   }, [drawId]);
 
   useEffect(() => {
-    if (data && !isDrawNotificationShown) {
-      const drawingTime = new Date(data.drawingAt);
+    if (datas && !isDrawNotificationShown) {
+      const drawingTime = new Date(datas.drawingAt);
 
       const intervalId = setInterval(() => {
         const now = new Date();
@@ -109,7 +92,7 @@ export default function DrawId() {
 
       return () => clearInterval(intervalId);
     }
-  }, [data, isDrawNotificationShown]);
+  }, [datas, isDrawNotificationShown]);
 
   const handleSpinEnd = () => {
     if (currentWinnerIndex < winners.length - 1) {
@@ -122,11 +105,15 @@ export default function DrawId() {
       setTimeout(() => {
         setIsConfettiVisible(false);
       }, 30000);
-      document.querySelector(".emoji-rain-container").classList.add("show");
+
+      const emojiContainer = document.querySelector(".emoji-rain-container");
+      if (emojiContainer) {
+        emojiContainer.classList.add("show");
+      }
     }
   };
 
-  if (!data) {
+  if (!datas) {
     return (
       <div
         className={`center2 h-screen ${
@@ -138,7 +125,7 @@ export default function DrawId() {
     );
   }
 
-  const isDrawingPassed = new Date(data.drawingAt) < new Date();
+  const isDrawingPassed = new Date(datas.drawingAt) < new Date();
 
   return (
     <div
@@ -150,15 +137,15 @@ export default function DrawId() {
       {isConfettiVisible && <EmojiRain />}
 
       <div
-        key={data.id}
+        key={datas.id}
         className="relative flex w-full max-w-4xl p-6 mt-10 overflow-hidden bg-gray-100 rounded-lg shadow-md dark:bg-gray-800"
         style={{ height: "75vh" }}
       >
         <div className="relative w-1/2 h-full">
-          {data.thumbnailUrl ? (
+          {datas.thumbnailUrl ? (
             <Image
-              src={data.thumbnailUrl}
-              alt={data.title}
+              src={datas.thumbnailUrl}
+              alt={datas.title}
               layout="fill"
               objectFit="contain"
               className="absolute inset-0 rounded"
@@ -170,29 +157,34 @@ export default function DrawId() {
         <section className="flex-col w-1/2 center1">
           {showRoulette && winners.length > 0 ? (
             <div className="w-full mt-10 center1">
-              {/* <Wheel
-                names={data.participants.map(
-                  (p) => `${p.name} ${p.phone.slice(-4)}`
-                )}
-                selectedWinner={`${winners[currentWinnerIndex]?.name} ${winners[
-                  currentWinnerIndex
-                ]?.phone.slice(-4)}`}
-                onSpinEnd={handleSpinEnd}
-              /> */}{" "}
-              <LottoBox
-                names={data.participants.map(
-                  (p) => `${p.name} ${p.phone.slice(-4)}`
-                )} // 응모자 정보 전달
-                selectedWinner={`${winners[currentWinnerIndex]?.name} ${winners[
-                  currentWinnerIndex
-                ]?.phone.slice(-4)}`} // 당첨자 정보 전달
-                onSpinEnd={handleSpinEnd}
-              />
+              {drawingType === "룰렛" ? (
+                <Wheel
+                  names={datas.participants.map(
+                    (p) => `${p.name} ${p.phone.slice(-4)}`
+                  )}
+                  selectedWinner={`${
+                    winners[currentWinnerIndex]?.name
+                  } ${winners[currentWinnerIndex]?.phone.slice(-4)}`}
+                  onSpinEnd={handleSpinEnd}
+                />
+              ) : drawingType === "로또" ? (
+                <LottoBox
+                  names={datas.participants.map(
+                    (p) => `${p.name} ${p.phone.slice(-4)}`
+                  )}
+                  selectedWinner={`${
+                    winners[currentWinnerIndex]?.name
+                  } ${winners[currentWinnerIndex]?.phone.slice(-4)}`}
+                  onSpinEnd={handleSpinEnd}
+                />
+              ) : (
+                <p>알 수 없는 드로잉 타입입니다.</p>
+              )}
             </div>
           ) : (
             <>
               <DrawDetails
-                data={data}
+                data={datas}
                 darkMode={darkMode}
                 DarkModeToggle={DarkModeToggle}
               />
@@ -201,7 +193,7 @@ export default function DrawId() {
                 isDrawingPassed={isDrawingPassed}
                 showRoulette={showRoulette}
                 winners={winners}
-                participants={data.participants}
+                participants={datas.participants}
               />
             </>
           )}
