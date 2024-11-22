@@ -14,7 +14,6 @@ import LottoBox from "@/components/drawing/LottoBox";
 import useDrawingStore from "@/store/drawingStore";
 
 export default function DrawId() {
-  const { data, fetchData } = useDrawingStore(); // 데이터 가져오기
   const [datas, setDatas] = useState(null);
   const [showRoulette, setShowRoulette] = useState(false);
   const [winners, setWinners] = useState([]);
@@ -27,7 +26,10 @@ export default function DrawId() {
   const { drawId, from, viewType, drawingType = "룰렛" } = router.query;
 
   const handleBackToList = () => {
-    router.push("/completedDrawings");
+    router.push({
+      pathname: "/completedDrawings",
+      query: { viewType },
+    });
   };
 
   useEffect(() => {
