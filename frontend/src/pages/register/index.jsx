@@ -190,7 +190,11 @@ export default function Register() {
             </div>
           )}
         </div>
+
         <Time onTimeChange={setSelectedTime} />
+      </div>
+      <div className="w-1/2 pl-[130px] pt-2 text-[12px] whitespace-nowrap">
+        ※ 5분 단위로 등록해주세요.
       </div>
 
       <div className="w-1/2 m-4 center2">
