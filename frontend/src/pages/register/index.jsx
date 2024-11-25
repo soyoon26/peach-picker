@@ -235,12 +235,12 @@ export default function Register() {
               >
                 로또
               </div>
-              <div
+              {/* <div
                 className="px-4 py-2 hover:bg-gray-100"
                 onClick={() => selectMethod("PINBALL")}
               >
                 핀볼
-              </div>
+              </div> */}
               <div
                 className="px-4 py-2 hover:bg-gray-100"
                 onClick={() => selectMethod("ROULETTE")}
