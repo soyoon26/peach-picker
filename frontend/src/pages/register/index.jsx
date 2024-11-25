@@ -48,6 +48,24 @@ export default function Register() {
   };
 
   const setDate = (day) => {
+    if (!day) {
+      setFormatDay(
+        `${selectedDay.getFullYear()}년 ${
+          selectedDay.getMonth() + 1
+        }월 ${selectedDay.getDate()}일`
+      );
+      setCalOpen(false);
+      return;
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (day < today) {
+      alert("유효하지 않은 날짜입니다.");
+      return;
+    }
+
     setSelectedDay(day);
     setFormatDay(
       `${day.getFullYear()}년 ${day.getMonth() + 1}월 ${day.getDate()}일`
@@ -89,8 +107,32 @@ export default function Register() {
 
     setThumbnail(blob);
   };
-
   const handleSubmit = async () => {
+    if (!eventName) {
+      alert("이벤트명을 입력해주세요.");
+      return;
+    }
+
+    if (!winnerCnt || winnerCnt <= 0) {
+      alert("당첨자 수를 입력해주세요.");
+      return;
+    }
+
+    if (method === "추첨 방법 선택") {
+      alert("추첨 방법을 선택해주세요.");
+      return;
+    }
+
+    if (!selectedDay) {
+      alert("날짜를 선택해주세요.");
+      return;
+    }
+
+    if (!selectedTime) {
+      alert("시간을 선택해주세요.");
+      return;
+    }
+
     const [hours, minutes] = selectedTime.split(":");
     const combinedDateTime = new Date(
       selectedDay.getFullYear(),
@@ -124,35 +166,22 @@ export default function Register() {
     if (thumbnail) {
       formData.append("thumbnail", thumbnail, "thumbnail.png");
     }
-    console.log("FormData 확인:");
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
-    for (let [key, value] of formData.entries()) {
-      if (value instanceof File) {
-        console.log(key, value.name);
-      } else {
-        console.log(key, value);
-      }
-    }
+
     try {
       const response = await axios.post(`/api/drawing/register`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(formData, "확인");
       if (response.status === 200) {
         const newDrawing = response.data;
         addNewDrawing(newDrawing);
         alert("추첨이 성공적으로 등록되었습니다.");
         router.push("/mypage/mylist");
       } else {
-        console.log(formData, "확인");
         console.error("Error:", response.statusText);
       }
     } catch (error) {
-      console.log(formData, "확인");
       console.error("Error:", error);
     }
   };
@@ -190,7 +219,11 @@ export default function Register() {
             </div>
           )}
         </div>
+
         <Time onTimeChange={setSelectedTime} />
+      </div>
+      <div className="w-1/2 pl-[130px] pt-2 text-[12px] whitespace-nowrap">
+        ※ 5분 단위로 등록해주세요.
       </div>
 
       <div className="w-1/2 m-4 center2">
@@ -235,12 +268,7 @@ export default function Register() {
               >
                 로또
               </div>
-              <div
-                className="px-4 py-2 hover:bg-gray-100"
-                onClick={() => selectMethod("PINBALL")}
-              >
-                핀볼
-              </div>
+
               <div
                 className="px-4 py-2 hover:bg-gray-100"
                 onClick={() => selectMethod("ROULETTE")}
