@@ -48,6 +48,24 @@ export default function Register() {
   };
 
   const setDate = (day) => {
+    if (!day) {
+      setFormatDay(
+        `${selectedDay.getFullYear()}년 ${
+          selectedDay.getMonth() + 1
+        }월 ${selectedDay.getDate()}일`
+      );
+      setCalOpen(false);
+      return;
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (day < today) {
+      alert("유효하지 않은 날짜입니다.");
+      return;
+    }
+
     setSelectedDay(day);
     setFormatDay(
       `${day.getFullYear()}년 ${day.getMonth() + 1}월 ${day.getDate()}일`
