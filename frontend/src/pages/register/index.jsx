@@ -12,6 +12,9 @@ import axios from "axios";
 
 export default function Register() {
   const { isLoggedIn, isInitialized, initialize } = useAuthStore();
+  const { addNewDrawing } = useDrawingStore();
+  const router = useRouter();
+
   const [isOpen, setIsOpen] = useState(false);
   const [calOpen, setCalOpen] = useState(false);
   const [formatDay, setFormatDay] = useState("날짜 선택");
@@ -22,9 +25,8 @@ export default function Register() {
   const [eventName, setEventName] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { token } = useAuthStore();
-  const { addNewDrawing } = useDrawingStore();
-  const router = useRouter();
 
   useEffect(() => {
     if (!isInitialized) {
@@ -39,13 +41,8 @@ export default function Register() {
     }
   }, [isInitialized, isLoggedIn, router]);
 
-  const dropDown = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const dropCalendar = () => {
-    setCalOpen(!calOpen);
-  };
+  const dropDown = () => setIsOpen(!isOpen);
+  const dropCalendar = () => setCalOpen(!calOpen);
 
   const setDate = (day) => {
     if (!day) {
@@ -79,12 +76,18 @@ export default function Register() {
   };
 
   const handleWinnerCnt = (event) => {
-    setWinnerCnt(event.target.value);
+    const value = event.target.value;
+
+    if (isNaN(value) || value < 1) {
+      alert("당첨자는 1명 이상이어야 합니다.");
+      setWinnerCnt(1);
+      return;
+    }
+
+    setWinnerCnt(parseInt(value, 10));
   };
 
-  const handleEventName = (event) => {
-    setEventName(event.target.value);
-  };
+  const handleEventName = (event) => setEventName(event.target.value);
 
   const handleFile = (event) => {
     const file = event.target.files[0];
@@ -107,72 +110,69 @@ export default function Register() {
 
     setThumbnail(blob);
   };
+
   const handleSubmit = async () => {
-    if (!eventName) {
-      alert("이벤트명을 입력해주세요.");
-      return;
-    }
+    if (isSubmitting) return;
 
-    if (!winnerCnt || winnerCnt <= 0) {
-      alert("당첨자 수를 입력해주세요.");
-      return;
-    }
-
-    if (method === "추첨 방법 선택") {
-      alert("추첨 방법을 선택해주세요.");
-      return;
-    }
-
-    if (!selectedDay) {
-      alert("날짜를 선택해주세요.");
-      return;
-    }
-
-    if (!selectedTime) {
-      alert("시간을 선택해주세요.");
-      return;
-    }
-
-    const [hours, minutes] = selectedTime.split(":");
-    const combinedDateTime = new Date(
-      selectedDay.getFullYear(),
-      selectedDay.getMonth(),
-      selectedDay.getDate(),
-      parseInt(hours, 10),
-      parseInt(minutes, 10)
-    );
-
-    const year = combinedDateTime.getFullYear();
-    const month = String(combinedDateTime.getMonth() + 1).padStart(2, "0");
-    const day = String(combinedDateTime.getDate()).padStart(2, "0");
-    const hoursFormatted = String(combinedDateTime.getHours()).padStart(2, "0");
-    const minutesFormatted = String(combinedDateTime.getMinutes()).padStart(
-      2,
-      "0"
-    );
-
-    const formattedDateTime = `${year}-${month}-${day}T${hoursFormatted}:${minutesFormatted}`;
-
-    const formData = new FormData();
-    formData.append("title", eventName);
-    formData.append("drawingAt", formattedDateTime);
-    formData.append("drawingType", method);
-    formData.append("winner", winnerCnt);
-
-    if (selectedFile) {
-      formData.append("participants", selectedFile);
-    }
-
-    if (thumbnail) {
-      formData.append("thumbnail", thumbnail, "thumbnail.png");
-    }
+    setIsSubmitting(true);
 
     try {
+      if (!eventName) {
+        alert("이벤트명을 입력해주세요.");
+        return;
+      }
+
+      if (!winnerCnt || winnerCnt <= 0) {
+        alert("당첨자 수를 입력해주세요.");
+        return;
+      }
+
+      if (method === "추첨 방법 선택") {
+        alert("추첨 방법을 선택해주세요.");
+        return;
+      }
+
+      if (!selectedDay) {
+        alert("날짜를 선택해주세요.");
+        return;
+      }
+
+      if (!selectedTime) {
+        alert("시간을 선택해주세요.");
+        return;
+      }
+
+      const [hours, minutes] = selectedTime.split(":");
+      const combinedDateTime = new Date(
+        selectedDay.getFullYear(),
+        selectedDay.getMonth(),
+        selectedDay.getDate(),
+        parseInt(hours, 10),
+        parseInt(minutes, 10)
+      );
+
+      const formattedDateTime = `${combinedDateTime.toISOString()}`;
+
+      const formData = new FormData();
+      formData.append("title", eventName);
+      formData.append("drawingAt", formattedDateTime);
+      formData.append("drawingType", method);
+      formData.append("winner", winnerCnt);
+
+      if (selectedFile) {
+        formData.append("participants", selectedFile);
+      }
+
+      if (thumbnail) {
+        formData.append("thumbnail", thumbnail, "thumbnail.png");
+      }
+
       const response = await axios.post(`/api/drawing/register`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
       if (response.status === 200) {
         const newDrawing = response.data;
         addNewDrawing(newDrawing);
@@ -183,14 +183,24 @@ export default function Register() {
       }
     } catch (error) {
       console.error("Error:", error);
+      alert("등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <div
-      className="mt-20 center1 min-w-[1000px]  w-full"
+      className="mt-20 center1 min-w-[1000px] w-full"
       style={{ height: "calc(100vh - 100px)" }}
     >
+      {/* 스피너 */}
+      {isSubmitting && (
+        <div className="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
+          <div className="w-16 h-16 border-4 border-white rounded-full border-t-transparent animate-spin"></div>
+        </div>
+      )}
+
       <div className="w-1/5 mt-20">
         <ImgUpload onImageSelect={handleImageSelect} />
       </div>
@@ -244,8 +254,13 @@ export default function Register() {
           <input
             type="number"
             className="flex-1 text-[14px] leading-[140%] font-black text-[#828282] line-clamp-1"
-            placeholder="당첨자 수를 입력하세요."
+            placeholder="당첨자 수를 설정하세요."
+            value={winnerCnt}
+            min="1"
             onChange={handleWinnerCnt}
+            onKeyDown={(e) => {
+              if (e.key === "-" || e.key === "e") e.preventDefault();
+            }}
           />
         </div>
       </div>

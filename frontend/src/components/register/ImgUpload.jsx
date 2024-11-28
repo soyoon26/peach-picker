@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 import CropImage from "./croppedImg";
-import Image from "next/image";
-import upload from "../../images/upload.webp";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faImage } from "@fortawesome/free-solid-svg-icons";
 
 export default function ImageUploadAndCrop({ onImageSelect }) {
   const [imageSrc, setImageSrc] = useState(null);
@@ -35,7 +35,13 @@ export default function ImageUploadAndCrop({ onImageSelect }) {
           style={{ width: "100%", height: "auto" }}
         />
       ) : (
-        <Image src={upload} layout="responsive" alt="upload" />
+        <div>
+          <FontAwesomeIcon
+            icon={faImage}
+            className="text-gray-300 cursor-pointer text-9xl"
+            onClick={() => document.getElementById("fileInput").click()}
+          />
+        </div>
       )}
 
       <button

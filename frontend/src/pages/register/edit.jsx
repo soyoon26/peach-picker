@@ -28,9 +28,28 @@ export default function edit() {
     setMethod(selectedMethod);
     setIsOpen(false);
   };
-  const [winnerCnt, setWinnerCnt] = useState("");
+  const [winnerCnt, setWinnerCnt] = useState(1);
   const handleWinnerCnt = (event) => {
-    setWinnerCnt(event.target.value);
+    const value = parseInt(event.target.value, 10);
+
+    if (isNaN(value) || value < 1) {
+      alert("당첨자는 1명 이상이어야 합니다.");
+      return;
+    }
+
+    setWinnerCnt(value);
+  };
+
+  const incrementWinnerCnt = () => {
+    setWinnerCnt((prev) => prev + 1);
+  };
+
+  const decrementWinnerCnt = () => {
+    if (winnerCnt > 1) {
+      setWinnerCnt((prev) => prev - 1);
+    } else {
+      alert("당첨자는 1명 이상이어야 합니다.");
+    }
   };
   const [eventName, setEventName] = useState("");
   const handleEventName = (event) => {

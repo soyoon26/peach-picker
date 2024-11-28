@@ -18,12 +18,19 @@ export default function CropImage({ imageSrc, onCropComplete }) {
       <Cropper
         src={imageSrc}
         style={{ height: 400, width: "100%" }}
-        aspectRatio={1} // 정사각형 비율
+        aspectRatio={1}
         viewMode={1}
         guides={false}
         ref={cropperRef}
       />
-      <button onClick={getCroppedImage}>Crop Image</button>
+      <div className="flex items-end justify-end w-full">
+        <button
+          className="p-2 m-2 text-white bg-black rounded-lg"
+          onClick={getCroppedImage}
+        >
+          이미지 크롭하기
+        </button>
+      </div>
     </div>
   );
 }

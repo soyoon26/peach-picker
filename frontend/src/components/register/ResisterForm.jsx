@@ -1,4 +1,3 @@
-// useRegisterForm.js
 export const useRegisterForm = () => {
   const handleSubmit = async (
     eventName,
@@ -23,7 +22,7 @@ export const useRegisterForm = () => {
       const response = await fetch(serverUrl, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${yourJwtToken}`, // 필요한 경우 JWT 토큰을 추가
+          Authorization: `Bearer ${yourJwtToken}`,
         },
         body: formData,
       });
