@@ -54,6 +54,7 @@ export default function Index() {
   }, [searchTerm]);
 
   useEffect(() => {
+    console.log("isDataLoaded:", isDataLoaded, "data:", data);
     if (!isDataLoaded || !data || data.length === 0) {
       console.log("Data is not loaded yet or is empty:", data);
       setFilteredData([]);
@@ -61,6 +62,7 @@ export default function Index() {
     }
 
     const userName = localStorage.getItem("userName");
+    console.log(userName, "유저네임");
     const now = new Date();
     console.log(data, "organizer 에러 확인");
     let userDrawings = data.filter((item) => item.organizer === userName);
@@ -87,7 +89,7 @@ export default function Index() {
     }
 
     setFilteredData(userDrawings);
-  }, [data, sortOrder, debouncedTerm]);
+  }, [data, sortOrder, debouncedTerm, isDataLoaded]);
   const handleSortChange = (event) => {
     setSortOrder(event.target.value);
   };
