@@ -189,7 +189,7 @@ export default function Index() {
   } = useTable({ columns, data: filteredData }, usePagination);
 
   return (
-    <div className=" center1 bg-gray-50 dark:bg-gray-900 mt-10">
+    <div className="mt-10  center1 bg-gray-50 dark:bg-gray-900">
       <div className="w-2/5 mt-10 center1">
         <input
           type="text"

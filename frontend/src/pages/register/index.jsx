@@ -114,9 +114,7 @@ export default function Register() {
 
   const handleSubmit = async () => {
     if (isSubmitting) return;
-
     setIsSubmitting(true);
-
     try {
       if (!eventName) throw new Error("이벤트명을 입력해주세요.");
       if (!winnerCnt || winnerCnt <= 0)
@@ -134,7 +132,7 @@ export default function Register() {
         parseInt(hours, 10),
         parseInt(minutes, 10)
       );
-      const formattedDateTime = `${combinedDateTime.toISOString()}`;
+      const formattedDateTime = combinedDateTime.toISOString().slice(0, 16);
 
       const formData = new FormData();
       formData.append("title", eventName);
@@ -144,10 +142,11 @@ export default function Register() {
 
       if (selectedFile) formData.append("participants", selectedFile);
       if (thumbnail) formData.append("thumbnail", thumbnail, "thumbnail.png");
-
-      const newDrawing = await registerDrawing(formData, token);
-
-      addNewDrawing(newDrawing);
+      for (const pair of formData.entries()) {
+        console.log(`${pair[0]}: ${pair[1]}`);
+      } // 확인
+      const response = await registerDrawing(formData, token);
+      addNewDrawing(response.data);
       alert("추첨이 성공적으로 등록되었습니다.");
       router.push("/mypage/mylist");
     } catch (error) {
