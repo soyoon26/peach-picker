@@ -29,7 +29,7 @@ const KakaoOAuthCallback = () => {
           });
 
           const data = await response.json();
-          console.log(data, "코드찾아");
+          console.log(data);
           if (response.ok) {
             const accessToken = data.access_token;
 
@@ -69,7 +69,7 @@ const KakaoOAuthCallback = () => {
     }
   }, [router.query]);
 
-  return <div>로그인 처리 중...</div>;
+  return <div>로그인 처리 중</div>;
 };
 
 export default KakaoOAuthCallback;
