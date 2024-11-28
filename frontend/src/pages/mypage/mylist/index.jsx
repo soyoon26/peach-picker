@@ -20,9 +20,14 @@ export default function Index() {
   const [sortOrder, setSortOrder] = useState("등록일순");
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedTerm, setDebouncedTerm] = useState(searchTerm);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
-    fetchData();
+    const fetchDataAsync = async () => {
+      await fetchData();
+      setIsDataLoaded(true);
+    };
+    fetchDataAsync();
   }, [fetchData]);
 
   useEffect(() => {
@@ -49,9 +54,15 @@ export default function Index() {
   }, [searchTerm]);
 
   useEffect(() => {
+    if (!isDataLoaded || !data || data.length === 0) {
+      console.log("Data is not loaded yet or is empty:", data);
+      setFilteredData([]);
+      return;
+    }
+
     const userName = localStorage.getItem("userName");
     const now = new Date();
-
+    console.log(data, "organizer 에러 확인");
     let userDrawings = data.filter((item) => item.organizer === userName);
 
     userDrawings = userDrawings.map((item) => ({
@@ -189,7 +200,7 @@ export default function Index() {
   } = useTable({ columns, data: filteredData }, usePagination);
 
   return (
-    <div className="mt-10  center1 bg-gray-50 dark:bg-gray-900">
+    <div className="mt-10 center1 bg-gray-50 dark:bg-gray-900">
       <div className="w-2/5 mt-10 center1">
         <input
           type="text"
