@@ -40,15 +40,16 @@ const MemberInfo = ({ setUsername, setEmail, setProfileImg }) => {
             });
 
             if (!response.ok) {
+              if (response.status === 401) {
+                alert("정보가 만료되었습니다. 다시 로그인해주세요.");
+                logout();
+                router.push("/login");
+                return;
+              }
               throw new Error("프로필 정보를 가져오는데 실패했습니다.");
             }
 
             const data = await response.json();
-
-            localStorage.setItem("email", data.email);
-            localStorage.setItem("userName", data.name);
-            localStorage.setItem("profileImg", data.profileUrl);
-
             setUsername(data.name);
             setEmail(data.email);
             setProfileImg(data.profileUrl);
