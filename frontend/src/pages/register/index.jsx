@@ -79,7 +79,15 @@ export default function Register() {
   };
 
   const handleWinnerCnt = (event) => {
-    setWinnerCnt(event.target.value);
+    const value = event.target.value;
+
+    if (isNaN(value) || value < 1) {
+      alert("당첨자는 1명 이상이어야 합니다.");
+      setWinnerCnt(1);
+      return;
+    }
+
+    setWinnerCnt(parseInt(value, 10));
   };
 
   const handleEventName = (event) => {
@@ -244,8 +252,13 @@ export default function Register() {
           <input
             type="number"
             className="flex-1 text-[14px] leading-[140%] font-black text-[#828282] line-clamp-1"
-            placeholder="당첨자 수를 입력하세요."
+            placeholder="당첨자 수를 설정하세요."
+            value={winnerCnt}
+            min="1"
             onChange={handleWinnerCnt}
+            onKeyDown={(e) => {
+              if (e.key === "-" || e.key === "e") e.preventDefault();
+            }}
           />
         </div>
       </div>
