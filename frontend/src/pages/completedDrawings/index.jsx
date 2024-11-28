@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import useDrawingStore from "@/store/drawingStore";
 import darkModeStore from "@/store/darkModeStore";
-
 import GridView from "@/components/list/GridView";
 import TableView from "@/components/list/TableView";
 import SearchAndFilters from "@/components/list/SearchAndFilters";

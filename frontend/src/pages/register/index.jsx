@@ -9,6 +9,7 @@ import useAuthStore from "../../store/authStore";
 import useDrawingStore from "../../store/drawingStore";
 import Button from "@/components/button/Button";
 import axios from "axios";
+import { registerDrawing } from "@/api/drawingAPI";
 
 export default function Register() {
   const { isLoggedIn, isInitialized, initialize } = useAuthStore();
@@ -117,30 +118,13 @@ export default function Register() {
     setIsSubmitting(true);
 
     try {
-      if (!eventName) {
-        alert("이벤트명을 입력해주세요.");
-        return;
-      }
-
-      if (!winnerCnt || winnerCnt <= 0) {
-        alert("당첨자 수를 입력해주세요.");
-        return;
-      }
-
-      if (method === "추첨 방법 선택") {
-        alert("추첨 방법을 선택해주세요.");
-        return;
-      }
-
-      if (!selectedDay) {
-        alert("날짜를 선택해주세요.");
-        return;
-      }
-
-      if (!selectedTime) {
-        alert("시간을 선택해주세요.");
-        return;
-      }
+      if (!eventName) throw new Error("이벤트명을 입력해주세요.");
+      if (!winnerCnt || winnerCnt <= 0)
+        throw new Error("당첨자 수를 입력해주세요.");
+      if (method === "추첨 방법 선택")
+        throw new Error("추첨 방법을 선택해주세요.");
+      if (!selectedDay) throw new Error("날짜를 선택해주세요.");
+      if (!selectedTime) throw new Error("시간을 선택해주세요.");
 
       const [hours, minutes] = selectedTime.split(":");
       const combinedDateTime = new Date(
@@ -150,7 +134,6 @@ export default function Register() {
         parseInt(hours, 10),
         parseInt(minutes, 10)
       );
-
       const formattedDateTime = `${combinedDateTime.toISOString()}`;
 
       const formData = new FormData();
@@ -159,31 +142,17 @@ export default function Register() {
       formData.append("drawingType", method);
       formData.append("winner", winnerCnt);
 
-      if (selectedFile) {
-        formData.append("participants", selectedFile);
-      }
+      if (selectedFile) formData.append("participants", selectedFile);
+      if (thumbnail) formData.append("thumbnail", thumbnail, "thumbnail.png");
 
-      if (thumbnail) {
-        formData.append("thumbnail", thumbnail, "thumbnail.png");
-      }
+      const newDrawing = await registerDrawing(formData, token);
 
-      const response = await axios.post(`/api/drawing/register`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (response.status === 200) {
-        const newDrawing = response.data;
-        addNewDrawing(newDrawing);
-        alert("추첨이 성공적으로 등록되었습니다.");
-        router.push("/mypage/mylist");
-      } else {
-        console.error("Error:", response.statusText);
-      }
+      addNewDrawing(newDrawing);
+      alert("추첨이 성공적으로 등록되었습니다.");
+      router.push("/mypage/mylist");
     } catch (error) {
-      console.error("Error:", error);
-      alert("등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+      alert(error.message || "등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+      console.error("Submission Error:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -194,7 +163,6 @@ export default function Register() {
       className="mt-20 center1 min-w-[1000px] w-full"
       style={{ height: "calc(100vh - 100px)" }}
     >
-      {/* 스피너 */}
       {isSubmitting && (
         <div className="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50">
           <div className="w-16 h-16 border-4 border-white rounded-full border-t-transparent animate-spin"></div>
