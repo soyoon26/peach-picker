@@ -1,4 +1,3 @@
-// src/store/drawingStore.js
 import { create } from "zustand";
 import { getDrawings } from "@/api/listApi";
 

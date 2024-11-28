@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { usePagination, useTable } from "react-table";
-import Button from "@/components/button/Button";
 import useDrawingStore from "@/store/drawingStore";
 import GridView from "@/components/list/GridView";
 import SortSelector from "@/components/list/SortSelector";
