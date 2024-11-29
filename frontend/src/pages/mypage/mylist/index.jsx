@@ -11,7 +11,7 @@ import darkModeStore from "@/store/darkModeStore";
 import useAuthStore from "../../../store/authStore";
 
 export default function Index() {
-  const { isLoggedIn, isInitialized, initialize } = useAuthStore();
+  const { isLoggedIn, isInitialized, initialize, userInfo } = useAuthStore();
   const router = useRouter();
   const { data, fetchData } = useDrawingStore();
   // const { darkMode } = darkModeStore();
@@ -61,7 +61,7 @@ export default function Index() {
       return;
     }
 
-    const userName = localStorage.getItem("userName");
+    const userName = userInfo?.username;
     console.log(userName, "유저네임");
     const now = new Date();
     console.log(data, "organizer 에러 확인");

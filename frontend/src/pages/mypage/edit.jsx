@@ -67,18 +67,19 @@ export default function Edit() {
       if (!response.ok) {
         throw new Error("프로필 업데이트에 실패했습니다.");
       }
-      const data = await response.json();
-      setUserInfo({
-        username: data.name,
-        email: data.email,
-        profileImg: data.profileUrl,
-      });
-      // const contentType = response.headers.get("content-type");
-      // if (contentType && contentType.includes("application/json")) {
-      //   localStorage.setItem("email", data.email);
-      //   localStorage.setItem("userName", data.name);
-      //   localStorage.setItem("profileImg", data.profileUrl);
-      // }
+
+      const contentType = response.headers.get("Content-Type");
+      if (contentType && contentType.includes("application/json")) {
+        const data = await response.json();
+        setUserInfo({
+          username: data.name,
+          email: data.email,
+          profileImg: data.profileUrl,
+        });
+      } else {
+        const message = await response.text();
+        setMessage(message);
+      }
 
       setMessage("프로필이 성공적으로 업데이트되었습니다.");
       setIsModalOpen(true);
