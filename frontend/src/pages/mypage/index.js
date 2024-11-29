@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import MemberInfo from "../../components/login/MemberInfo";
 import { getDrawings } from "@/api/listApi";
+import useAuthStore from "@/store/authStore";
 
 const MyPage = () => {
   const [message, setMessage] = useState("");
