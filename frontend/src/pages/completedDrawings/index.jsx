@@ -58,7 +58,11 @@ export default function Index() {
   }, [fetchData]);
 
   useEffect(() => {
+    const now = new Date();
     const sortedData = data
+      .filter((item) => {
+        return new Date(item.drawingAt) < now;
+      })
       .filter((item) =>
         item.title.toLowerCase().includes(searchTerm.toLowerCase())
       )
