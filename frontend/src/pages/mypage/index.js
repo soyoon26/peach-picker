@@ -11,17 +11,18 @@ const MyPage = () => {
   const [message, setMessage] = useState("");
   const [completedDrawings, setCompletedDrawings] = useState(0);
   const [upcomingDrawings, setUpcomingDrawings] = useState(0);
-  const { userInfo, isLoggedIn } = useAuthStore();
+  const { userInfo, isLoggedIn, isInitialized } = useAuthStore();
   const router = useRouter();
 
   useEffect(() => {
     const fetchDrawings = async () => {
       try {
+        if (!userInfo?.username) return; // userInfo가 없으면 실행 중지
         const drawings = await getDrawings();
         const now = new Date();
 
         const userDrawings = drawings.filter(
-          (drawing) => drawing.organizer === userInfo?.username
+          (drawing) => drawing.organizer === userInfo.username
         );
 
         const completed = userDrawings.filter(
@@ -38,10 +39,10 @@ const MyPage = () => {
       }
     };
 
-    if (userInfo?.username) {
+    if (isInitialized && isLoggedIn) {
       fetchDrawings();
     }
-  }, []);
+  }, [userInfo?.username, isInitialized, isLoggedIn]);
 
   return (
     <div className="mt-10 mb-20 center1">
