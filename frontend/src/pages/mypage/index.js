@@ -45,11 +45,7 @@ const MyPage = () => {
 
   return (
     <div className="mt-10 mb-20 center1">
-      <MemberInfo
-        setUsername={setUsername}
-        setEmail={setEmail}
-        setProfileImg={setProfileImg}
-      />
+      <MemberInfo />
       {message && <div className="mt-10 mb-20 center1">{message}</div>}
       <section className="relative mb-10 overflow-hidden rounded-full w-60 h-60">
         <Image
