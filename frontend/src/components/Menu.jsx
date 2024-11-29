@@ -53,7 +53,7 @@ const Menu = () => {
                 <Link href="/register">추첨 등록</Link>
               </div>
               <div className="p-2">
-                <Link href="/mypage/mylist">추첨 목록</Link>
+                <Link href="/mypage/mylist">내 추첨 목록</Link>
               </div>
               <div className="p-2">
                 <Link href="/mypage">마이 페이지</Link>
