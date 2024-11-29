@@ -23,13 +23,26 @@ export default function Index() {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
-    const fetchDataAsync = async () => {
-      await fetchData();
-      setIsDataLoaded(true);
-    };
-    fetchDataAsync();
-  }, [fetchData]);
+    const fetchUserData = async () => {
+      if (!userInfo?.username) {
+        console.log("userInfo is not ready yet");
+        return;
+      }
 
+      const fetchDataAsync = async () => {
+        try {
+          await fetchData();
+          setIsDataLoaded(true);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+
+      fetchDataAsync();
+    };
+
+    fetchUserData();
+  }, [fetchData, userInfo?.username, isInitialized]);
   useEffect(() => {
     if (!isInitialized) {
       initialize();
