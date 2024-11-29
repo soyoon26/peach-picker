@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Modal from "../register/Modal";
 import CropImage from "../register/croppedImg";
+import useAuthStore from "@/store/authStore";
 
 export default function CropProfileImg({ onImageSelect }) {
+  const { userInfo, setUserInfo } = useAuthStore();
   const [imageSrc, setImageSrc] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [storedProfileImg, setStoredProfileImg] = useState(null);
 
   useEffect(() => {
-    const savedProfileImg = localStorage.getItem("profileImg");
-    if (savedProfileImg) {
-      setStoredProfileImg(savedProfileImg);
-      setCroppedImage(savedProfileImg);
+    if (userInfo?.profileImg) {
+      setCroppedImage(userInfo.profileImg);
     }
-  }, []);
+  }, [userInfo]);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -31,8 +31,6 @@ export default function CropProfileImg({ onImageSelect }) {
     setCroppedImage(croppedImageDataUrl);
     setIsModalOpen(false);
     onImageSelect(blob);
-
-    localStorage.setItem("profileImg", croppedImageDataUrl);
   };
 
   const triggerImageUpload = () => {
@@ -41,9 +39,9 @@ export default function CropProfileImg({ onImageSelect }) {
 
   return (
     <div className="mb-10 center1">
-      {croppedImage || storedProfileImg ? (
+      {croppedImage ? (
         <img
-          src={croppedImage || storedProfileImg}
+          src={croppedImage}
           alt="Profile Image"
           style={{ width: "300px", height: "300px", cursor: "pointer" }}
           onClick={triggerImageUpload}
@@ -67,10 +65,10 @@ export default function CropProfileImg({ onImageSelect }) {
 
       <button
         onClick={triggerImageUpload}
-        className="font-bold"
+        className="p-2 font-bold text-white bg-black lounded-lg"
         style={{
           padding: "5px 10px",
-          color: "black",
+
           border: "none",
           borderRadius: "5px",
           cursor: "pointer",

@@ -7,8 +7,15 @@ import CropProfileImg from "@/components/login/CropProfileImg";
 import Modal from "@/components/common/Modal";
 
 export default function Edit() {
-  const { isLoggedIn, token, isInitialized, initialize, logout } =
-    useAuthStore();
+  const {
+    isLoggedIn,
+    token,
+    isInitialized,
+    initialize,
+    logout,
+    userInfo,
+    setUserInfo,
+  } = useAuthStore();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [profileImg, setProfileImg] = useState(null);
@@ -24,16 +31,17 @@ export default function Edit() {
   }, [initialize, isInitialized]);
 
   useEffect(() => {
-    if (isInitialized && !isLoggedIn) {
-      setMessage("로그인이 필요합니다.");
-      router.push("/login");
-    } else if (isInitialized && isLoggedIn) {
-      const storedName = localStorage.getItem("userName");
-      const storedEmail = localStorage.getItem("email");
-      setEmail(storedEmail || "");
-      setUsername(storedName || "");
+    if (isInitialized) {
+      if (!isLoggedIn) {
+        setMessage("로그인이 필요합니다.");
+        router.push("/login");
+        return;
+      }
+
+      setUsername(userInfo?.username || "");
+      setEmail(userInfo?.email || "");
     }
-  }, [isInitialized, isLoggedIn, token, router]);
+  }, [isInitialized, isLoggedIn, userInfo, router]);
 
   const handleUpdateProfile = async () => {
     if (!username) {
@@ -59,14 +67,18 @@ export default function Edit() {
       if (!response.ok) {
         throw new Error("프로필 업데이트에 실패했습니다.");
       }
-
-      const contentType = response.headers.get("content-type");
-      if (contentType && contentType.includes("application/json")) {
-        const data = await response.json();
-        localStorage.setItem("email", data.email);
-        localStorage.setItem("userName", data.name);
-        localStorage.setItem("profileImg", data.profileUrl);
-      }
+      const data = await response.json();
+      setUserInfo({
+        username: data.name,
+        email: data.email,
+        profileImg: data.profileUrl,
+      });
+      // const contentType = response.headers.get("content-type");
+      // if (contentType && contentType.includes("application/json")) {
+      //   localStorage.setItem("email", data.email);
+      //   localStorage.setItem("userName", data.name);
+      //   localStorage.setItem("profileImg", data.profileUrl);
+      // }
 
       setMessage("프로필이 성공적으로 업데이트되었습니다.");
       setIsModalOpen(true);
@@ -121,9 +133,17 @@ export default function Edit() {
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          placeholder={userInfo?.username || "사용자 이름을 입력하세요"}
         />
 
-        <Input title="Email" type="text" value={email} readOnly />
+        <Input
+          title="Email"
+          type="text"
+          value={email}
+          readOnly
+          placeholder={userInfo?.email}
+          className="placeholder-black"
+        />
 
         <div className="flex gap-2 mt-20 mb-2">
           <Button

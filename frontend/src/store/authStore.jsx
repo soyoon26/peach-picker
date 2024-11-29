@@ -4,9 +4,11 @@ const useAuthStore = create((set) => ({
   isLoggedIn: false,
   token: null,
   isInitialized: false,
+  userInfo: null,
   login: (token, rememberMe) => {
     if (rememberMe) {
       localStorage.setItem("token", token);
+      sessionStorage.setItem("token", token);
     } else {
       sessionStorage.setItem("token", token);
     }
@@ -26,6 +28,7 @@ const useAuthStore = create((set) => ({
       set({ isLoggedIn: false, token: null, isInitialized: true });
     }
   },
+  setUserInfo: (userInfo) => set({ userInfo }),
 }));
 
 export default useAuthStore;

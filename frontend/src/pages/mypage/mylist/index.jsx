@@ -14,7 +14,7 @@ export default function Index() {
   const { isLoggedIn, isInitialized, initialize } = useAuthStore();
   const router = useRouter();
   const { data, fetchData } = useDrawingStore();
-  const { darkMode } = darkModeStore();
+  // const { darkMode } = darkModeStore();
   const [filteredData, setFilteredData] = useState([]);
   const [viewType, setViewType] = useState(router.query.viewType || "table");
   const [sortOrder, setSortOrder] = useState("등록일순");

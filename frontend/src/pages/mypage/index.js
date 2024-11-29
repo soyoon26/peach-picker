@@ -7,30 +7,22 @@ import MemberInfo from "../../components/login/MemberInfo";
 import { getDrawings } from "@/api/listApi";
 
 const MyPage = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [profileImg, setProfileImg] = useState("");
   const [completedDrawings, setCompletedDrawings] = useState(0);
   const [upcomingDrawings, setUpcomingDrawings] = useState(0);
+  const { userInfo, isLoggedIn } = useAuthStore();
   const router = useRouter();
 
   useEffect(() => {
-    const userNameFromStorage = localStorage.getItem("userName");
-    console.log("Fetched userName from localStorage:", userNameFromStorage);
-    setUsername(userNameFromStorage);
-
     const fetchDrawings = async () => {
       try {
         const drawings = await getDrawings();
-        console.log("Fetched drawings:", drawings);
         const now = new Date();
 
         const userDrawings = drawings.filter(
-          (drawing) => drawing.organizer === userNameFromStorage
+          (drawing) => drawing.organizer === userInfo?.username
         );
 
-        console.log("Filtered userDrawings:", userDrawings);
         const completed = userDrawings.filter(
           (drawing) => new Date(drawing.drawingAt) < now
         ).length;
@@ -45,7 +37,7 @@ const MyPage = () => {
       }
     };
 
-    if (userNameFromStorage) {
+    if (userInfo?.username) {
       fetchDrawings();
     }
   }, []);
@@ -60,7 +52,7 @@ const MyPage = () => {
       {message && <div className="mt-10 mb-20 center1">{message}</div>}
       <section className="relative mb-10 overflow-hidden rounded-full w-60 h-60">
         <Image
-          src={profileImg}
+          src={userInfo?.profileImg}
           layout="fill"
           objectFit="cover"
           alt="Profile Image"
@@ -68,8 +60,8 @@ const MyPage = () => {
       </section>
       <div className="text-[20px] w-[380px] mb-2">기본 정보</div>
       <div className="flex flex-col justify-evenly w-[380px] h-[127px] bg-[#fff] border-[1px] border-solid border-[#000]">
-        <div className="ml-5 text-[18px]">Username : {username}</div>
-        <div className="ml-5 text-[18px]">Email : {email}</div>
+        <div className="ml-5 text-[18px]">Username : {userInfo?.username}</div>
+        <div className="ml-5 text-[18px]">Email : {userInfo?.email}</div>
       </div>
       <div className="mt-10 text-[20px] w-[380px] mb-2">나의 추첨 현황</div>
       <div className="w-[383px] h-[138px]">
